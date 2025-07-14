@@ -10,9 +10,10 @@ import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Copy, RefreshCw, Shield, AlertTriangle, CheckCircle2 } from "lucide-react"
+import { Copy, RefreshCw, Shield, AlertTriangle, CheckCircle2, Globe } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
+import { getCharacterSetForLanguage, hasNativeCharacters } from "@/lib/character-sets"
 
 interface PasswordOptions {
   length: number
@@ -20,11 +21,12 @@ interface PasswordOptions {
   includeLowercase: boolean
   includeNumbers: boolean
   includeSymbols: boolean
+  includeNative: boolean // 新增：是否包含本地化字符
 }
 
 export function PasswordGeneratorContent() {
   // 国际化翻译钩子
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   
   // 密码生成选项状态
   const [options, setOptions] = useState<PasswordOptions>({
@@ -33,6 +35,7 @@ export function PasswordGeneratorContent() {
     includeLowercase: true,
     includeNumbers: true,
     includeSymbols: false,
+    includeNative: false, // 新增：默认不包含本地化字符
   })
 
   // 生成的密码和相关状态
@@ -40,13 +43,18 @@ export function PasswordGeneratorContent() {
   const [copied, setCopied] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
 
-  // 字符集定义（使用useMemo优化性能）
-  const charSets = useMemo(() => ({
-    uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    lowercase: "abcdefghijklmnopqrstuvwxyz",
-    numbers: "0123456789",
-    symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
-  }), [])
+  // 字符集定义（使用useMemo优化性能，基于当前语言）
+  const charSets = useMemo(() => {
+    const currentLanguage = i18n.language || 'en'
+    const languageCharSet = getCharacterSetForLanguage(currentLanguage)
+    return {
+      uppercase: languageCharSet.uppercase,
+      lowercase: languageCharSet.lowercase,
+      numbers: languageCharSet.numbers,
+      symbols: languageCharSet.symbols,
+      native: languageCharSet.native || '', // 本地化字符（如果有）
+    }
+  }, [i18n.language])
 
   // 生成密码的核心函数
   const generatePassword = useCallback(() => {
@@ -58,6 +66,7 @@ export function PasswordGeneratorContent() {
     if (options.includeLowercase) availableChars += charSets.lowercase
     if (options.includeNumbers) availableChars += charSets.numbers
     if (options.includeSymbols) availableChars += charSets.symbols
+    if (options.includeNative && charSets.native) availableChars += charSets.native
 
     if (availableChars === "") {
       setPassword("")
@@ -80,6 +89,9 @@ export function PasswordGeneratorContent() {
     }
     if (options.includeSymbols) {
       generatedPassword += charSets.symbols[Math.floor(Math.random() * charSets.symbols.length)]
+    }
+    if (options.includeNative && charSets.native) {
+      generatedPassword += charSets.native[Math.floor(Math.random() * charSets.native.length)]
     }
 
     // 填充剩余长度
@@ -123,6 +135,7 @@ export function PasswordGeneratorContent() {
     if (options.includeLowercase) criteria++
     if (options.includeNumbers) criteria++
     if (options.includeSymbols) criteria++
+    if (options.includeNative && charSets.native) criteria++
     
     // 基于长度评分
     if (options.length >= 8) score += 1
@@ -306,6 +319,23 @@ export function PasswordGeneratorContent() {
                     }
                   />
                 </div>
+
+                {/* 本地化字符开关 - 仅在当前语言有本地化字符时显示 */}
+                {charSets.native && (
+                  <div className="flex items-center justify-between space-x-2">
+                    <Label htmlFor="native" className="text-sm font-normal flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      {t('settings.nativeChars')}
+                    </Label>
+                    <Switch
+                      id="native"
+                      checked={options.includeNative}
+                      onCheckedChange={(checked) => 
+                        setOptions({ ...options, includeNative: checked })
+                      }
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -314,7 +344,7 @@ export function PasswordGeneratorContent() {
             {/* 生成按钮 */}
             <Button 
               onClick={generatePassword}
-              disabled={isGenerating || (!options.includeUppercase && !options.includeLowercase && !options.includeNumbers && !options.includeSymbols)}
+                              disabled={isGenerating || (!options.includeUppercase && !options.includeLowercase && !options.includeNumbers && !options.includeSymbols && !options.includeNative)}
               className="w-full h-12 text-lg"
               size="lg"
             >

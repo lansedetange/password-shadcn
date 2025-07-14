@@ -32,7 +32,8 @@ export const translations = {
         uppercase: 'Uppercase Letters (A-Z)',
         lowercase: 'Lowercase Letters (a-z)',
         numbers: 'Numbers (0-9)',
-        symbols: 'Symbols (!@#$%^&*)'
+        symbols: 'Symbols (!@#$%^&*)',
+        nativeChars: 'Native Characters'
       },
       security: {
         title: 'Security Tips',
@@ -85,7 +86,8 @@ export const translations = {
         uppercase: '大写字母 (A-Z)',
         lowercase: '小写字母 (a-z)',
         numbers: '数字 (0-9)',
-        symbols: '符号 (!@#$%^&*)'
+        symbols: '符号 (!@#$%^&*)',
+        nativeChars: '本地化字符'
       },
       security: {
         title: '安全提示',
@@ -138,7 +140,8 @@ export const translations = {
         uppercase: '大寫字母 (A-Z)',
         lowercase: '小寫字母 (a-z)',
         numbers: '數字 (0-9)',
-        symbols: '符號 (!@#$%^&*)'
+        symbols: '符號 (!@#$%^&*)',
+        nativeChars: '本地化字符'
       },
       security: {
         title: '安全提示',
@@ -191,7 +194,8 @@ export const translations = {
         uppercase: 'Letras Mayúsculas (A-Z)',
         lowercase: 'Letras Minúsculas (a-z)',
         numbers: 'Números (0-9)',
-        symbols: 'Símbolos (!@#$%^&*)'
+        symbols: 'Símbolos (!@#$%^&*)',
+        nativeChars: 'Caracteres Nativos'
       },
       security: {
         title: 'Consejos de Seguridad',
@@ -244,7 +248,8 @@ export const translations = {
         uppercase: 'Lettres Majuscules (A-Z)',
         lowercase: 'Lettres Minuscules (a-z)',
         numbers: 'Chiffres (0-9)',
-        symbols: 'Symboles (!@#$%^&*)'
+        symbols: 'Symboles (!@#$%^&*)',
+        nativeChars: 'Caractères Natifs'
       },
       security: {
         title: 'Conseils de Sécurité',
@@ -297,7 +302,8 @@ export const translations = {
         uppercase: 'Großbuchstaben (A-Z)',
         lowercase: 'Kleinbuchstaben (a-z)',
         numbers: 'Zahlen (0-9)',
-        symbols: 'Symbole (!@#$%^&*)'
+        symbols: 'Symbole (!@#$%^&*)',
+        nativeChars: 'Native Zeichen'
       },
       security: {
         title: 'Sicherheitstipps',
@@ -350,7 +356,8 @@ export const translations = {
         uppercase: '大文字 (A-Z)',
         lowercase: '小文字 (a-z)',
         numbers: '数字 (0-9)',
-        symbols: '記号 (!@#$%^&*)'
+        symbols: '記号 (!@#$%^&*)',
+        nativeChars: 'ネイティブ文字'
       },
       security: {
         title: 'セキュリティのヒント',
@@ -403,7 +410,8 @@ export const translations = {
         uppercase: '대문자 (A-Z)',
         lowercase: '소문자 (a-z)',
         numbers: '숫자 (0-9)',
-        symbols: '기호 (!@#$%^&*)'
+        symbols: '기호 (!@#$%^&*)',
+        nativeChars: '고유 문자'
       },
       security: {
         title: '보안 팁',
@@ -456,7 +464,8 @@ export const translations = {
         uppercase: 'Заглавные Буквы (A-Z)',
         lowercase: 'Строчные Буквы (a-z)',
         numbers: 'Цифры (0-9)',
-        symbols: 'Символы (!@#$%^&*)'
+        symbols: 'Символы (!@#$%^&*)',
+        nativeChars: 'Родные Символы'
       },
       security: {
         title: 'Советы по Безопасности',
@@ -509,7 +518,8 @@ export const translations = {
         uppercase: 'أحرف كبيرة (A-Z)',
         lowercase: 'أحرف صغيرة (a-z)',
         numbers: 'أرقام (0-9)',
-        symbols: 'رموز (!@#$%^&*)'
+        symbols: 'رموز (!@#$%^&*)',
+        nativeChars: 'أحرف محلية'
       },
       security: {
         title: 'نصائح الأمان',
@@ -562,7 +572,8 @@ export const translations = {
         uppercase: 'Letras Maiúsculas (A-Z)',
         lowercase: 'Letras Minúsculas (a-z)',
         numbers: 'Números (0-9)',
-        symbols: 'Símbolos (!@#$%^&*)'
+        symbols: 'Símbolos (!@#$%^&*)',
+        nativeChars: 'Caracteres Nativos'
       },
       security: {
         title: 'Dicas de Segurança',
@@ -615,7 +626,8 @@ export const translations = {
         uppercase: 'Lettere Maiuscole (A-Z)',
         lowercase: 'Lettere Minuscole (a-z)',
         numbers: 'Numeri (0-9)',
-        symbols: 'Simboli (!@#$%^&*)'
+        symbols: 'Simboli (!@#$%^&*)',
+        nativeChars: 'Caratteri Nativi'
       },
       security: {
         title: 'Consigli di Sicurezza',
@@ -668,7 +680,8 @@ export const translations = {
         uppercase: 'Hoofdletters (A-Z)',
         lowercase: 'Kleine Letters (a-z)',
         numbers: 'Cijfers (0-9)',
-        symbols: 'Symbolen (!@#$%^&*)'
+        symbols: 'Symbolen (!@#$%^&*)',
+        nativeChars: 'Native Tekens'
       },
       security: {
         title: 'Beveiligingstips',
@@ -721,7 +734,8 @@ export const translations = {
         uppercase: 'बड़े अक्षर (A-Z)',
         lowercase: 'छोटे अक्षर (a-z)',
         numbers: 'संख्याएं (0-9)',
-        symbols: 'प्रतीक (!@#$%^&*)'
+        symbols: 'प्रतीक (!@#$%^&*)',
+        nativeChars: 'मूल अक्षर'
       },
       security: {
         title: 'सुरक्षा सुझाव',
@@ -774,7 +788,8 @@ export const translations = {
         uppercase: 'Huruf Kapital (A-Z)',
         lowercase: 'Huruf Kecil (a-z)',
         numbers: 'Angka (0-9)',
-        symbols: 'Simbol (!@#$%^&*)'
+        symbols: 'Simbol (!@#$%^&*)',
+        nativeChars: 'Karakter Asli'
       },
       security: {
         title: 'Tips Keamanan',
@@ -827,7 +842,8 @@ export const translations = {
         uppercase: 'ตัวพิมพ์ใหญ่ (A-Z)',
         lowercase: 'ตัวพิมพ์เล็ก (a-z)',
         numbers: 'ตัวเลข (0-9)',
-        symbols: 'สัญลักษณ์ (!@#$%^&*)'
+        symbols: 'สัญลักษณ์ (!@#$%^&*)',
+        nativeChars: 'อักขระท้องถิ่น'
       },
       security: {
         title: 'เคล็ดลับความปลอดภัย',
