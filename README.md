@@ -16,6 +16,34 @@
 - **一键复制**: 快速复制生成的密码到剪贴板
 - **响应式设计**: 完美适配移动端和桌面端
 
+### 🌙 主题功能
+- **亮色/暗色模式**: 手动切换亮色和暗色主题
+- **跟随系统**: 自动根据系统设置切换主题
+- **主题持久化**: 记住用户的主题选择偏好
+- **无闪烁切换**: 优化的主题切换体验
+
+### 🌍 多语言支持
+- **16种国际语言**: 支持全球主要语言
+  - 🇺🇸 English (英语)
+  - 🇨🇳 简体中文 (Chinese Simplified)
+  - 🇹🇼 繁體中文 (Chinese Traditional)
+  - 🇪🇸 Español (西班牙语)
+  - 🇫🇷 Français (法语)
+  - 🇩🇪 Deutsch (德语)
+  - 🇯🇵 日本語 (日语)
+  - 🇰🇷 한국어 (韩语)
+  - 🇷🇺 Русский (俄语)
+  - 🇸🇦 العربية (阿拉伯语)
+  - 🇵🇹 Português (葡萄牙语)
+  - 🇮🇹 Italiano (意大利语)
+  - 🇳🇱 Nederlands (荷兰语)
+  - 🇮🇳 हिन्दी (印地语)
+  - 🇮🇩 Bahasa Indonesia (印尼语)
+  - 🇹🇭 ไทย (泰语)
+- **智能语言检测**: 自动检测浏览器语言偏好
+- **语言持久化**: Cookie存储用户语言选择（7天）
+- **RTL支持**: 完整支持从右到左的语言布局
+
 ### 安全特性
 - **字符随机化**: 使用加密安全的随机算法
 - **强度评估**: 基于长度和字符类型多样性的智能评分
@@ -29,6 +57,10 @@
 - **样式**: Tailwind CSS
 - **图标**: Lucide React
 - **字体**: Geist Sans & Geist Mono
+- **主题管理**: Next-themes
+- **国际化**: React-i18next + i18next
+- **状态存储**: JS-Cookie (语言偏好)
+- **性能优化**: React Hooks (useMemo, useCallback)
 
 ## 📁 项目结构
 
@@ -37,14 +69,21 @@ password-shadcn/
 ├── app/
 │   ├── fonts/              # 字体文件
 │   ├── favicon.ico        # 网站图标
-│   ├── globals.css        # 全局样式
-│   ├── layout.tsx         # 根布局组件 (服务器组件)
-│   └── page.tsx           # 主页面 (服务器组件)
+│   ├── globals.css        # 全局样式 (含Tailwind和主题变量)
+│   ├── layout.tsx         # 根布局组件 (服务器组件 + 主题提供者)
+│   └── page.tsx           # 主页面 (服务器组件 + i18n提供者)
 ├── components/
 │   ├── ui/                # Shadcn UI 基础组件
-│   └── password-generator-content.tsx  # 密码生成器客户端组件
+│   ├── password-generator-content.tsx  # 密码生成器客户端组件 (支持i18n)
+│   ├── theme-provider.tsx      # 主题提供者组件
+│   ├── theme-toggle.tsx        # 主题切换组件
+│   ├── language-selector.tsx   # 语言选择器组件
+│   └── client-i18n-provider.tsx # 客户端i18n提供者
 ├── lib/
-│   └── utils.ts           # 工具函数
+│   ├── utils.ts           # 工具函数
+│   └── i18n/              # 国际化配置
+│       ├── config.ts      # i18n配置和语言列表
+│       └── translations.ts # 16种语言翻译资源
 └── 配置文件...
 ```
 
@@ -56,17 +95,26 @@ password-shadcn/
 - **服务器组件** (`page.tsx`, `layout.tsx`): 
   - 处理SEO metadata
   - 静态内容渲染
+  - 主题和i18n提供者包装
   - 不包含交互逻辑
 
-- **客户端组件** (`password-generator-content.tsx`):
+- **客户端组件** (`password-generator-content.tsx`等):
   - 所有用户交互逻辑
   - 状态管理 (useState, useCallback)
   - 浏览器API调用 (clipboard API)
+  - 主题切换和语言切换功能
 
 ### 状态管理
-- 使用React内置hooks进行状态管理
-- `useState`: 密码选项、生成状态、复制状态
-- `useCallback`: 密码生成函数优化
+- **React内置hooks**: 密码选项、生成状态、复制状态
+- **next-themes**: 主题状态管理（支持SSR无闪烁）
+- **i18next**: 多语言状态管理和翻译
+- **js-cookie**: 持久化语言偏好设置
+
+### 国际化架构
+- **配置分离**: 语言列表和翻译资源分别管理
+- **按需加载**: 翻译资源统一加载（优化包大小）
+- **类型安全**: TypeScript支持的语言代码类型检查
+- **SSR友好**: 客户端初始化避免hydration mismatch
 
 ## 🎨 UI/UX 设计
 
@@ -121,7 +169,7 @@ npm start
 
 ## 🔄 版本更新日志
 
-### v0.1.0 (当前版本)
+### v0.2.0 (当前版本)
 - ✅ 初始化Next.js 14项目
 - ✅ 配置Shadcn UI组件库
 - ✅ 实现密码生成器核心功能
@@ -129,13 +177,22 @@ npm start
 - ✅ 实现响应式设计
 - ✅ 添加复制到剪贴板功能
 - ✅ 集成安全提示和最佳实践
+- ✅ **新增亮色/暗色主题切换**
+- ✅ **支持系统主题自动切换**
+- ✅ **集成16种国际语言支持**
+- ✅ **添加语言切换组件**
+- ✅ **完整的i18n国际化架构**
+- ✅ **主题和语言偏好持久化**
 
-### 计划功能 (v0.2.0)
+### 计划功能 (v0.3.0)
 - 🔄 密码历史记录 (本地存储)
 - 🔄 密码强度可视化图表
 - 🔄 更多自定义字符集选项
 - 🔄 批量密码生成
 - 🔄 密码策略模板
+- 🔄 PWA支持 (离线使用)
+- 🔄 更多主题选项 (蓝色、绿色等)
+- 🔄 语音朗读密码功能
 
 ## 🤝 贡献指南
 

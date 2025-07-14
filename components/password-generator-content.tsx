@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,8 @@ import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Copy, RefreshCw, Shield, AlertTriangle, CheckCircle2 } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSelector } from "@/components/language-selector"
 
 interface PasswordOptions {
   length: number
@@ -20,6 +23,9 @@ interface PasswordOptions {
 }
 
 export function PasswordGeneratorContent() {
+  // 国际化翻译钩子
+  const { t } = useTranslation()
+  
   // 密码生成选项状态
   const [options, setOptions] = useState<PasswordOptions>({
     length: 12,
@@ -108,7 +114,7 @@ export function PasswordGeneratorContent() {
 
   // 计算密码强度
   const getPasswordStrength = () => {
-    if (!password) return { level: 0, text: "No Password", color: "gray" }
+    if (!password) return { level: 0, key: "weak", color: "gray" }
     
     let score = 0
     let criteria = 0
@@ -126,10 +132,10 @@ export function PasswordGeneratorContent() {
     // 基于字符类型多样性评分
     score += criteria
     
-    if (score <= 2) return { level: 1, text: "Weak", color: "red" }
-    if (score <= 4) return { level: 2, text: "Medium", color: "yellow" }
-    if (score <= 6) return { level: 3, text: "Strong", color: "green" }
-    return { level: 4, text: "Very Strong", color: "emerald" }
+    if (score <= 2) return { level: 1, key: "weak", color: "red" }
+    if (score <= 4) return { level: 2, key: "medium", color: "yellow" }
+    if (score <= 6) return { level: 3, key: "strong", color: "green" }
+    return { level: 4, key: "veryStrong", color: "emerald" }
   }
 
   const strength = getPasswordStrength()
@@ -152,12 +158,18 @@ export function PasswordGeneratorContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4">
       <div className="container mx-auto max-w-2xl pt-8">
+        {/* 顶部工具栏 */}
+        <div className="flex justify-end gap-2 mb-6">
+          <LanguageSelector />
+          <ThemeToggle />
+        </div>
+        
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Password Generator
+            {t('page.title')}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Create strong and secure passwords with customizable options
+            {t('page.subtitle')}
           </p>
         </div>
 
@@ -165,10 +177,10 @@ export function PasswordGeneratorContent() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
-              Generate Secure Password
+              {t('generator.title')}
             </CardTitle>
             <CardDescription>
-              Customize your password settings and generate a secure password
+              {t('generator.description')}
             </CardDescription>
           </CardHeader>
           
@@ -176,7 +188,7 @@ export function PasswordGeneratorContent() {
             {/* 密码显示区域 */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password-display">Generated Password</Label>
+                <Label htmlFor="password-display">{t('password.label')}</Label>
                 {password && (
                   <Badge 
                     variant="outline" 
@@ -188,7 +200,7 @@ export function PasswordGeneratorContent() {
                     `}
                   >
                     {getStrengthIcon()}
-                    {strength.text}
+                    {t(`password.strength.${strength.key}`)}
                   </Badge>
                 )}
               </div>
@@ -198,7 +210,7 @@ export function PasswordGeneratorContent() {
                   id="password-display"
                   value={password}
                   readOnly
-                  placeholder="Generated password will appear here..."
+                  placeholder={t('password.placeholder')}
                   className="font-mono text-lg"
                 />
                 <Button
@@ -207,6 +219,7 @@ export function PasswordGeneratorContent() {
                   variant="outline"
                   size="icon"
                   className="shrink-0"
+                  title={copied ? t('generator.copied') : t('generator.copyButton')}
                 >
                   {copied ? (
                     <CheckCircle2 className="h-4 w-4 text-green-500" />
@@ -222,8 +235,8 @@ export function PasswordGeneratorContent() {
             {/* 密码长度设置 */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label>Password Length</Label>
-                <Badge variant="secondary">{options.length} characters</Badge>
+                <Label>{t('settings.length')}</Label>
+                <Badge variant="secondary">{options.length} {t('settings.charactersNote')}</Badge>
               </div>
               <Slider
                 value={[options.length]}
@@ -239,12 +252,12 @@ export function PasswordGeneratorContent() {
 
             {/* 字符类型选择 */}
             <div className="space-y-4">
-              <Label className="text-base font-semibold">Character Types</Label>
+              <Label className="text-base font-semibold">{t('settings.characters')}</Label>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center justify-between space-x-2">
                   <Label htmlFor="uppercase" className="text-sm font-normal">
-                    Uppercase Letters (A-Z)
+                    {t('settings.uppercase')}
                   </Label>
                   <Switch
                     id="uppercase"
@@ -257,7 +270,7 @@ export function PasswordGeneratorContent() {
 
                 <div className="flex items-center justify-between space-x-2">
                   <Label htmlFor="lowercase" className="text-sm font-normal">
-                    Lowercase Letters (a-z)
+                    {t('settings.lowercase')}
                   </Label>
                   <Switch
                     id="lowercase"
@@ -270,7 +283,7 @@ export function PasswordGeneratorContent() {
 
                 <div className="flex items-center justify-between space-x-2">
                   <Label htmlFor="numbers" className="text-sm font-normal">
-                    Numbers (0-9)
+                    {t('settings.numbers')}
                   </Label>
                   <Switch
                     id="numbers"
@@ -283,7 +296,7 @@ export function PasswordGeneratorContent() {
 
                 <div className="flex items-center justify-between space-x-2">
                   <Label htmlFor="symbols" className="text-sm font-normal">
-                    Symbols (!@#$%^&*)
+                    {t('settings.symbols')}
                   </Label>
                   <Switch
                     id="symbols"
@@ -308,12 +321,12 @@ export function PasswordGeneratorContent() {
               {isGenerating ? (
                 <>
                   <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                  Generating...
+                  {t('generator.generating')}
                 </>
               ) : (
                 <>
                   <RefreshCw className="mr-2 h-5 w-5" />
-                  Generate Password
+                  {t('generator.generateButton')}
                 </>
               )}
             </Button>
@@ -321,7 +334,7 @@ export function PasswordGeneratorContent() {
             {/* 提示信息 */}
             {(!options.includeUppercase && !options.includeLowercase && !options.includeNumbers && !options.includeSymbols) && (
               <p className="text-sm text-red-500 text-center">
-                Please select at least one character type to generate a password
+                {t('messages.selectCharacterType')}
               </p>
             )}
           </CardContent>
@@ -334,13 +347,13 @@ export function PasswordGeneratorContent() {
               <Shield className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
               <div className="space-y-1">
                 <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                  Security Tips
+                  {t('security.title')}
                 </p>
                 <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-                  <li>• Use at least 12 characters for better security</li>
-                  <li>• Include a mix of uppercase, lowercase, numbers, and symbols</li>
-                  <li>• Don&apos;t reuse passwords across different accounts</li>
-                  <li>• Store passwords securely using a password manager</li>
+                  <li>• {t('security.tip1')}</li>
+                  <li>• {t('security.tip2')}</li>
+                  <li>• {t('security.tip3')}</li>
+                  <li>• {t('security.tip4')}</li>
                 </ul>
               </div>
             </div>

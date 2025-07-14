@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { PasswordGeneratorContent } from "@/components/password-generator-content"
+import { ClientI18nProvider } from "@/components/client-i18n-provider"
 
 export const metadata: Metadata = {
   title: "Password Generator - Create Secure Passwords",
@@ -13,5 +14,9 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  return <PasswordGeneratorContent />
+  return (
+    <ClientI18nProvider>
+      <PasswordGeneratorContent />
+    </ClientI18nProvider>
+  )
 }
