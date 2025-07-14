@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator"
 import { Copy, RefreshCw, Shield, AlertTriangle, CheckCircle2, Globe } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
-import { getCharacterSetForLanguage, hasNativeCharacters } from "@/lib/character-sets"
+import { getCharacterSetForLanguage } from "@/lib/character-sets"
 
 interface PasswordOptions {
   length: number

@@ -8,13 +8,7 @@ export interface LanguageCharacterSet {
   native?: string
 }
 
-// 通用字符集（用作备用）
-const UNIVERSAL_CHARSET = {
-  uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  lowercase: "abcdefghijklmnopqrstuvwxyz", 
-  numbers: "0123456789",
-  symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
-}
+
 
 // 各种语言的字符集映射
 export const LANGUAGE_CHARACTER_SETS: Record<string, LanguageCharacterSet> = {
