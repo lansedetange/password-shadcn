@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Password Generator - 安全密码生成器
 
-## Getting Started
+一个基于Next.js 14和Shadcn UI构建的专业密码生成器工具，支持自定义配置和实时安全分析。
 
-First, run the development server:
+## 🚀 功能特性
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 核心功能
+- **密码长度调节**: 支持4-50字符的自定义长度
+- **字符类型选择**: 
+  - 大写字母 (A-Z)
+  - 小写字母 (a-z) 
+  - 数字 (0-9)
+  - 特殊字符 (!@#$%^&*等)
+- **智能密码生成**: 确保每种选中的字符类型至少包含一个字符
+- **密码强度分析**: 实时显示密码强度等级和安全建议
+- **一键复制**: 快速复制生成的密码到剪贴板
+- **响应式设计**: 完美适配移动端和桌面端
+
+### 安全特性
+- **字符随机化**: 使用加密安全的随机算法
+- **强度评估**: 基于长度和字符类型多样性的智能评分
+- **安全提示**: 内置密码安全最佳实践指导
+
+## 🛠️ 技术栈
+
+- **框架**: Next.js 14 (App Router)
+- **开发语言**: TypeScript
+- **UI组件库**: Shadcn UI + Radix UI
+- **样式**: Tailwind CSS
+- **图标**: Lucide React
+- **字体**: Geist Sans & Geist Mono
+
+## 📁 项目结构
+
+```
+password-shadcn/
+├── app/
+│   ├── fonts/              # 字体文件
+│   ├── favicon.ico        # 网站图标
+│   ├── globals.css        # 全局样式
+│   ├── layout.tsx         # 根布局组件 (服务器组件)
+│   └── page.tsx           # 主页面 (服务器组件)
+├── components/
+│   ├── ui/                # Shadcn UI 基础组件
+│   └── password-generator-content.tsx  # 密码生成器客户端组件
+├── lib/
+│   └── utils.ts           # 工具函数
+└── 配置文件...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏗️ 架构设计
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 组件分离策略
+遵循Next.js 14最佳实践，严格分离服务器组件和客户端组件：
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **服务器组件** (`page.tsx`, `layout.tsx`): 
+  - 处理SEO metadata
+  - 静态内容渲染
+  - 不包含交互逻辑
 
-## Learn More
+- **客户端组件** (`password-generator-content.tsx`):
+  - 所有用户交互逻辑
+  - 状态管理 (useState, useCallback)
+  - 浏览器API调用 (clipboard API)
 
-To learn more about Next.js, take a look at the following resources:
+### 状态管理
+- 使用React内置hooks进行状态管理
+- `useState`: 密码选项、生成状态、复制状态
+- `useCallback`: 密码生成函数优化
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 UI/UX 设计
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 设计原则
+- **移动优先**: 响应式设计，优先考虑移动端体验
+- **无障碍性**: 完整的键盘导航和屏幕阅读器支持
+- **现代化**: 渐变背景、卡片布局、微交互动画
+- **直观性**: 清晰的视觉层次和信息架构
 
-## Deploy on Vercel
+### 组件使用
+- **Card**: 主要内容容器
+- **Slider**: 密码长度调节
+- **Switch**: 字符类型开关
+- **Button**: 生成和复制操作
+- **Badge**: 密码强度显示
+- **Input**: 密码显示区域
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔒 安全算法
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 密码生成算法
+1. **字符集构建**: 根据用户选择构建可用字符集
+2. **类型保证**: 确保每种选中的字符类型至少包含一个字符
+3. **随机填充**: 使用`Math.random()`填充剩余长度
+4. **字符洗牌**: Fisher-Yates算法打乱字符顺序
+
+### 强度评估算法
+基于以下因素进行评分：
+- 密码长度 (8+, 12+, 16+ 字符)
+- 字符类型多样性 (大小写、数字、符号)
+- 综合评分映射到强度等级
+
+## 📱 开发和部署
+
+### 开发环境
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器 (端口: 3000)
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 启动生产服务器
+npm start
+```
+
+### Git提交记录
+- `273ec12`: 初始化项目：Next.js 14基础配置
+- `[待提交]`: 实现密码生成器核心功能
+
+## 🔄 版本更新日志
+
+### v0.1.0 (当前版本)
+- ✅ 初始化Next.js 14项目
+- ✅ 配置Shadcn UI组件库
+- ✅ 实现密码生成器核心功能
+- ✅ 添加密码强度分析
+- ✅ 实现响应式设计
+- ✅ 添加复制到剪贴板功能
+- ✅ 集成安全提示和最佳实践
+
+### 计划功能 (v0.2.0)
+- 🔄 密码历史记录 (本地存储)
+- 🔄 密码强度可视化图表
+- 🔄 更多自定义字符集选项
+- 🔄 批量密码生成
+- 🔄 密码策略模板
+
+## 🤝 贡献指南
+
+### 代码规范
+- **注释语言**: 代码注释必须使用中文
+- **网页文案**: 用户界面文案必须使用英文
+- **组件命名**: 使用PascalCase，文件名使用kebab-case
+- **提交信息**: 使用中文描述具体改动
+
+### 开发规则
+- 遵循Next.js 14 App Router最佳实践
+- 严格分离服务器组件和客户端组件
+- 优先使用服务器组件，仅在必要时使用客户端组件
+- 所有样式使用Tailwind CSS
+
+## 📄 许可证
+
+MIT License - 可自由使用和修改
+
+---
+
+**开发团队**: Password Generator Team  
+**技术支持**: Next.js 14 + TypeScript + Shadcn UI  
+**最后更新**: 2024年当前日期
