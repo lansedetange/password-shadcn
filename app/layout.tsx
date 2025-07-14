@@ -18,8 +18,12 @@ export const metadata: Metadata = {
   description: "Professional password generator tool for creating strong, secure passwords with customizable options. Generate passwords with different lengths and character types for maximum security.",
   keywords: ["password generator", "secure password", "password creator", "strong password", "random password", "security"],
   authors: [{ name: "Password Generator Team" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

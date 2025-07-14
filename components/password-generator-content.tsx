@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -34,13 +34,13 @@ export function PasswordGeneratorContent() {
   const [copied, setCopied] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
 
-  // 字符集定义
-  const charSets = {
+  // 字符集定义（使用useMemo优化性能）
+  const charSets = useMemo(() => ({
     uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     lowercase: "abcdefghijklmnopqrstuvwxyz",
     numbers: "0123456789",
     symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
-  }
+  }), [])
 
   // 生成密码的核心函数
   const generatePassword = useCallback(() => {
@@ -91,7 +91,7 @@ export function PasswordGeneratorContent() {
     setPassword(passwordArray.join(""))
     setIsGenerating(false)
     setCopied(false)
-  }, [options])
+  }, [options, charSets])
 
   // 复制到剪贴板函数
   const copyToClipboard = async () => {
@@ -339,7 +339,7 @@ export function PasswordGeneratorContent() {
                 <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
                   <li>• Use at least 12 characters for better security</li>
                   <li>• Include a mix of uppercase, lowercase, numbers, and symbols</li>
-                  <li>• Don't reuse passwords across different accounts</li>
+                  <li>• Don&apos;t reuse passwords across different accounts</li>
                   <li>• Store passwords securely using a password manager</li>
                 </ul>
               </div>
